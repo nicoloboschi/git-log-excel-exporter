@@ -49,7 +49,6 @@ parser.add_argument("--repository", help="Github repository used to create link 
 parser.add_argument("--cpick-repository", help="Github repository used to create link to the cherry-pick refs")
 
 args = parser.parse_args()
-print(args)
 git_logs = capture_git_log(args.cwd, args.git_from, args.git_to)
 output_logs(git_logs, args.cwd, args.repository, args.cpick_repository)
 
