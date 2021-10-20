@@ -3,7 +3,7 @@
 import subprocess, re, argparse
 
 def capture_git_log(directory, git_ref):
-    result = subprocess.run(["git", "log", "--pretty=format:%h %s", git_ref],
+    result = subprocess.run(["git", "log", "--reverse", "--pretty=format:%h %s", git_ref],
         capture_output=True, text=True, cwd = directory)
     return result.stdout
 
