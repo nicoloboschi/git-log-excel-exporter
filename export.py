@@ -2,8 +2,8 @@
 
 import subprocess, re, argparse
 
-def capture_git_log(directory, start_tag, to_tag):
-    result = subprocess.run(["git", "log", "--pretty=format:%h %s", "%s..%s" % (start_tag, to_tag)],
+def capture_git_log(directory, git_ref):
+    result = subprocess.run(["git", "log", "--pretty=format:%h %s", git_ref],
         capture_output=True, text=True, cwd = directory)
     return result.stdout
 
@@ -42,13 +42,12 @@ def output_logs(git_log_result, cwd, repo, cherry_pick_repo):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--git-from", help="Starting git ref for 'git log'", required=True)
-parser.add_argument("--git-to", help="Ending git ref for 'git log'", required=True)  
+parser.add_argument("--git-ref", help="Git argument for 'git log'", required=True)
 parser.add_argument("--cwd", help="Working directory", default=".")
 parser.add_argument("--repository", help="Github repository used to create link to the commits", required=True)
 parser.add_argument("--cpick-repository", help="Github repository used to create link to the cherry-pick refs")
 
 args = parser.parse_args()
-git_logs = capture_git_log(args.cwd, args.git_from, args.git_to)
+git_logs = capture_git_log(args.cwd, args.git_ref)
 output_logs(git_logs, args.cwd, args.repository, args.cpick_repository)
 
